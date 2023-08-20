@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout.html}">
+<body>
+<section layout:fragment="content">
+  <div class="container text-center">
+    <div>
+      <h1>New List</h1>
+    </div>
+    <div class="m-3"style="max-width: 600px; margin: 0 auto;">
+
+      <div class="row">
+        <!--<label class="col-4 col-form-label">List Name: </label>-->
+        <div class="col-8">
+          <p th:text="*{name}" class="form-control">Name: </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <!--<label class="col-4 col-form-label">List Name: </label>-->
+        <div class="col-8">
+          <p th:text="*{description}" class="form-control">Descrption: </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <!--<label class="col-4 col-form-label">List Name: </label>-->
+        <div class="col-8">
+          <p th:text="*{type}" class="form-control">Type: </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <!--<label class="col-4 col-form-label">List Name: </label>-->
+        <div class="col-8">
+          <p th:text="*{item_count}" class="form-control">Item Count: </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+</html>

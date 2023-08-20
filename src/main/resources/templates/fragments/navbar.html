@@ -13,8 +13,8 @@
           Lists
         </a>
         <div class="dropdown-menu" aria-labelledby="listsMenuLink">
-          <a class="dropdown-item" href="/lists">View Your Lists</a>
-          <a class="dropdown-item" href="/lists/new">Create a New List</a>
+          <a class="dropdown-item" th:href="@{/lists}">View Your Lists</a>
+          <a class="dropdown-item" th:href="@{/lists/new}">Create a New List</a>
         </div>
       </li>
 
@@ -24,8 +24,8 @@
           Login
         </a>
         <div class="dropdown-menu" aria-labelledby="loginMenuLink">
-          <a class="dropdown-item" href="/login">View</a>
-          <a class="dropdown-item" href="/tickets/new">Create</a>
+          <a class="dropdown-item" th:href="@{/login}">Log In</a>
+          <a class="dropdown-item" href="@{../register}">Register</a>
         </div>
       </li>
 

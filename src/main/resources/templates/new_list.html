@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout.html}">
+<body>
+<section layout:fragment="content">
+  <div class="container text-center">
+    <div>
+      <h1>New List</h1>
+    </div>
+    <form th:action="@{/lists/new}" th:object="${list}"
+          method="post" style="max-width: 600px; margin: 0 auto;">
+      <div class="m-3">
+
+        <div class="form-group row">
+          <label class="col-4 col-form-label">List Name: </label>
+          <div class="col-8">
+            <input type="email" th:field="*{name}" class="form-control" required
+                   minlength="1" maxlength="64"/>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-4 col-form-label">Description: </label>
+          <div class="col-8">
+            <input type="password" th:field="*{description}" class="form-control">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-4 col-form-label">List Type: </label>
+          <div class="col-8">
+            <input type="text" th:field="*{type}" class="form-control"/>
+          </div>
+        </div>
+
+        <div>
+          <button type="submit" class="btn btn-primary">Sign Up</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+</body>
+</html>

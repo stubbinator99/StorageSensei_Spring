@@ -7,6 +7,9 @@
     <tr th:each="list : ${lists}">
       <td th:text="${list.id}">1</td>
       <td><a href="#" th:text="${list.name}">Name ...</a></td>
+      <td><a href="#" th:text="${list.description}">Description ...</a></td>
+      <td><a href="#" th:text="${list.item_count}">Item Count ...</a></td>
+      <td><a href="#" th:text="${list.type}">List Type ...</a></td>
       <!--<td th:text="${list.text}">Text ...</td>-->
     </tr>
   </div>
