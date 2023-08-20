@@ -1,0 +1,12 @@
+Docker:
+  docker-compose up -d
+    - start the docker container from the docker-compose file
+  docker-compose down
+    - stop the docker container
+  docker ps
+    - show currently running processes
+  docker inspect <pid>
+    - shows info about the container
+  docker inspect <pid> | grep "IPAddress"
+    - shows info about the container
+

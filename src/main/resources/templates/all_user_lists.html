@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<!--<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">-->
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout.html}">
+<body>
+<section layout:fragment="content">
+  <div class="container text-center">
+    <tr th:each="list : ${lists}">
+      <td th:text="${list.id}">1</td>
+      <td><a href="#" th:text="${list.name}">Name ...</a></td>
+      <!--<td th:text="${list.text}">Text ...</td>-->
+    </tr>
+  </div>
+</section>
+</body>
+</html>
