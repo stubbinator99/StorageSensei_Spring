@@ -1,5 +1,6 @@
 package com.storagesensei.controllers;
 
+import com.storagesensei.config.JwtTokenUtil;
 import com.storagesensei.db.ListRepository;
 import com.storagesensei.models.UserList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,57 +9,73 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.websocket.server.PathParam;
+import java.util.Optional;
+
 @Controller
-@RequestMapping("/api/lists")
+@RequestMapping("/lists")
 public class ListsController {
   @Autowired
   private ListRepository listRepo;
 
-  @RequestMapping("/all/{username}")
+  @Autowired
+  JwtTokenUtil jwtTokenUtil;
+
+  @RequestMapping("/all")
   public ModelAndView  showAllListsForUser(
-      /*@RequestParam("username") String username*/
-      @PathVariable("username") String username//temporary
+      HttpServletRequest request
   ) {
     ModelAndView mav = new ModelAndView("all_user_lists");
-    mav.addObject("lists", listRepo.findListsByUsername(username));
+
+    Optional<String> username = jwtTokenUtil.getUsernameFromRequest(request);
+    if (username.isEmpty()) {
+      return mav;
+    }
+
+    mav.addObject("lists", listRepo.findListsByUsername(username.get()));
+
     return mav;
   }
 
-  @RequestMapping("/{id}/{username}")
+  @RequestMapping("/{id}")
   public ModelAndView findListById(
-      @PathVariable("id") long listId,
-     /* @RequestParam("username") String username*/
-      @PathVariable("username") String username//temporary
+      HttpServletRequest request,
+      @PathVariable("id") long listId
   ) {
     ModelAndView mav = new ModelAndView("list_single_view");
-    mav.addObject("list", listRepo.findListByIdAndUser(username, listId));
+
+    Optional<String> username = jwtTokenUtil.getUsernameFromRequest(request);
+    if (username.isEmpty()) {
+      return mav;
+    }
+
+    mav.addObject("list", listRepo.findListByUsernameAndId(username.get(), listId));
     return mav;
   }
 
   @RequestMapping("/new")
-  public String showNewListForm(Model model) {
+  public String showNewListForm(
+      Model model
+  ) {
     model.addAttribute("list", new UserList());
 
     return "new_list";
   }
 
-  @PostMapping("/new/{username}")
+  @PostMapping("/new")
   public ModelAndView addList(
-      @RequestParam("list") UserList list,
-      /* @RequestParam("username") String username*/
-      @PathVariable("username") String username//temporary
+      HttpServletRequest request,
+      UserList list
   ) {
     ModelAndView mav = new ModelAndView("list_single_view");
 
-    /*mav.addObject("list", listRepo.addList(
-        list.getName(),
-        list.getDescription(),
-        list.getItemCount(),
-        list.getListType(),
-        list.getList_id(),
-        username));*/
+    Optional<String> username = jwtTokenUtil.getUsernameFromRequest(request);
+    if (username.isEmpty()) {
+      return mav;
+    }
 
-    list.setOwner(username);//temporary
+    list.setOwner(username.get());
 
     mav.addObject("list", listRepo.save(list));
     mav.addObject("message", "List created successfully.");
@@ -66,20 +83,37 @@ public class ListsController {
     return mav;
   }
 
+  @RequestMapping("/edit/{id}")
+  public String showEditListForm(
+      HttpServletRequest request,
+      /*@PathParam*/
+      @PathVariable("id") String id,
+      Model model
+  ) {
+    Optional<String> username = jwtTokenUtil.getUsernameFromRequest(request);
+    if (username.isEmpty()) {
+      // error here
+    }
+
+    UserList list = listRepo.findListByUsernameAndId(username.get(), Long.valueOf(id));
+
+    model.addAttribute("list", list);
+    return "edit_list";
+  }
+
   @PostMapping("/update")
   public ModelAndView updateList(
-      @RequestParam("list") UserList list,
-      @RequestParam("username") String username
+      HttpServletRequest request,
+      UserList list
   ) {
     ModelAndView mav = new ModelAndView("list_single_view");
 
-    /*mav.addObject("list", listRepo.updateList(
-        list.getName(),
-        list.getDescription(),
-        list.getItemCount(),
-        list.getListType(),
-        list.getList_id(),
-        username));*/
+    Optional<String> username = jwtTokenUtil.getUsernameFromRequest(request);
+    if (username.isEmpty()) {
+      return mav;
+    }
+
+    list.setOwner(username.get());
 
     mav.addObject("list", listRepo.save(list));
     mav.addObject("message", "List updated successfully.");

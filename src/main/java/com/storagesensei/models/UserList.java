@@ -1,13 +1,16 @@
 package com.storagesensei.models;
 
-import javax.persistence.*;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Entity
+import javax.persistence.*;
+
+@Entity(name="lists")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserList {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long list_id;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name="list_id")
+  private Long listId;
 
   @Column(name="name")
   private String name;
@@ -38,12 +41,12 @@ public class UserList {
     //this.items = items;
   }
 
-  public void setList_id(Long list_id) {
-    this.list_id = list_id;
+  public void setListId(Long list_id) {
+    this.listId = list_id;
   }
 
-  public Long getList_id() {
-    return list_id;
+  public Long getListId() {
+    return listId;
   }
 
   public String getName() {

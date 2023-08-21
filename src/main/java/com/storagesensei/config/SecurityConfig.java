@@ -99,6 +99,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 				// Our public endpoints
 				.antMatchers("/", "/index", "/home", "/register", "/signup_form", "/register_user", "/register_success").permitAll()
+				.antMatchers("/login").permitAll()
 				//.antMatchers("/api/public/**").permitAll()
 				//.antMatchers(HttpMethod.GET, "/api/author/**").permitAll()
 				//.antMatchers(HttpMethod.POST, "/api/author/search").permitAll()
@@ -166,7 +167,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	// Expose the AuthenticationManager Bean to make it public
 	@Override
 	@Bean
-	public AuthenticationManager authenticationManager() throws Exception {
+	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
 	}
 

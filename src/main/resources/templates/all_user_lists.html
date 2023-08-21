@@ -4,13 +4,14 @@
 <body>
 <section layout:fragment="content">
   <div class="container text-center">
+    <h3><a th:href="@{/lists/new}" class="btn btn-info" role="button">Add a List</a></h3>
     <tr th:each="list : ${lists}">
-      <td th:text="${list.id}">1</td>
-      <td><a href="#" th:text="${list.name}">Name ...</a></td>
-      <td><a href="#" th:text="${list.description}">Description ...</a></td>
-      <td><a href="#" th:text="${list.item_count}">Item Count ...</a></td>
-      <td><a href="#" th:text="${list.type}">List Type ...</a></td>
-      <!--<td th:text="${list.text}">Text ...</td>-->
+      <td th:text="${list.listId}">Id ...</td>
+      <td><a  th:text="${list.name}">Name ...</a></td>
+      <td><a  th:text="${list.description}">Description ...</a></td>
+      <td><a  th:text="${list.itemCount}">Item Count ...</a></td>
+      <td><a th:href="@{'/lists/edit/' + ${list.listId}}" class="btn btn-info" role="button">Edit</a></td>
+      <!--<td><a href="#" th:text="${list.type}">List Type ...</a></td>-->
     </tr>
   </div>
 </section>

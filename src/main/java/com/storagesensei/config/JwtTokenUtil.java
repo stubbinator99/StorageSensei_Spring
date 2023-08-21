@@ -1,10 +1,15 @@
 package com.storagesensei.config;
 
+import com.storagesensei.db.CustomUserDetails;
 import com.storagesensei.models.User;
 import io.jsonwebtoken.*;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.Optional;
 
 import static java.lang.String.format;
 
@@ -19,7 +24,7 @@ public class JwtTokenUtil {
     this.logger = logger;
   }*/
 
-  public String generateAccessToken(User user) {
+  public String generateAccessToken(/*User user*/CustomUserDetails user) {
     return Jwts.builder()
         //.setSubject(format("%s,%s", user.getId(), user.getUsername()))
         .setSubject(user.getUsername())
@@ -56,6 +61,36 @@ public class JwtTokenUtil {
         .getBody();
 
     return claims.getExpiration();
+  }
+
+  public Optional<String> getUsernameFromRequest(HttpServletRequest request) {
+    Optional<String> jwtToken = getJwtToken(request);
+    if (jwtToken.isEmpty()) {
+      return Optional.empty();
+    }
+
+    return Optional.of(getUsername(jwtToken.get()));
+  }
+
+  public Optional<String> getJwtToken(HttpServletRequest request) {
+    Cookie[] cookies = request.getCookies();
+    if (cookies == null || cookies.length < 1) {
+      return Optional.empty();
+    }
+
+    Cookie jwtCookie = null;
+    for( Cookie cookie : cookies ) {
+      if(( "jwtToken").equals( cookie.getName() ) ) {
+        jwtCookie = cookie;
+        break;
+      }
+    }
+
+    if( jwtCookie == null || StringUtils.isEmpty( jwtCookie.getValue() ) ) {
+      return Optional.empty();
+    }
+
+    return Optional.of(jwtCookie.getValue());
   }
 
   public boolean validate(String token) {

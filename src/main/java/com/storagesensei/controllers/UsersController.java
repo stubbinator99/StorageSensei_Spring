@@ -16,13 +16,15 @@ public class UsersController {
   @Autowired
   PasswordEncoder passwordEncoder;
 
-  /*@PostMapping("/login")
-  public @ResponseBody String login(@RequestParam User user) {
+  @RequestMapping("/login")
+  public String showLoginPage(Model model) {
+    //model.addAttribute("user", new User());
 
-  }*/
+    return "login";
+  }
 
   @RequestMapping("/register")
-  public String showRegistrationForm(Model model) {
+  public String showRegistrationPage(Model model) {
     model.addAttribute("user", new User());
 
     return "signup_form";
