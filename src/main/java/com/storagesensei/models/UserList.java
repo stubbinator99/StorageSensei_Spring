@@ -21,8 +21,8 @@ public class UserList {
   @Column(name="item_count")
   private int itemCount;
 
-  @Column(name="type")
-  private ListType listType;
+  /*@Column(name="type")
+  private ListType listType;*/
 
   /*@Column(name="")
   private List<Item> items;*/
@@ -34,7 +34,7 @@ public class UserList {
     this.name = name;
     this.description = description;
     this.itemCount = itemCount;
-    this.listType = listType;
+    //this.listType = listType;
     //this.items = items;
   }
 
@@ -78,13 +78,13 @@ public class UserList {
     this.itemCount = itemCount;
   }
 
-  public ListType getListType() {
+  /*public ListType getListType() {
     return listType;
   }
 
   public void setListType(ListType listType) {
     this.listType = listType;
-  }
+  }*/
 
   /*public List<Item> getItems() {
     return items;
