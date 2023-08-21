@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/lists")
+@RequestMapping("/api/lists")
 public class ListsController {
   @Autowired
   private ListRepository listRepo;

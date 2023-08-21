@@ -11,33 +11,5 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 
 @Configuration
 public class SpringConfigurationBeans {
-  private BCryptPasswordEncoder passwordEncoder = null;
 
-  @Bean
-  public UserDetailsService userDetailsService() {
-    return new CustomUserDetailsService();
-  }
-
-  @Bean
-  public BCryptPasswordEncoder passwordEncoder() {
-    if (passwordEncoder == null) {
-      passwordEncoder = new BCryptPasswordEncoder();
-    }
-
-    return passwordEncoder;
-  }
-
-  @Bean
-  public DaoAuthenticationProvider authenticationProvider() {
-    DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-    authProvider.setUserDetailsService(userDetailsService());
-    authProvider.setPasswordEncoder(passwordEncoder());
-
-    return authProvider;
-  }
-
-  @Bean
-  public AuthenticationSuccessHandler appAuthenticationSuccessHandler(){
-    return new CustomAuthenticationSuccessHandler();
-  }
 }
